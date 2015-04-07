@@ -1,6 +1,8 @@
 import io
 import time
 import psutil
+import signal
+import sys
 
 import Adafruit_Nokia_LCD as LCD
 import Adafruit_GPIO.SPI as SPI
@@ -37,6 +39,17 @@ draw = ImageDraw.Draw(image)
 
 # Load default font.
 font = ImageFont.load_default()
+
+def signal_term_handler(signum = None, frame = None):
+	print "Terminated."
+	tFile.close()
+	draw.rectangle((0,0,83,47), outline=255, fill=255)
+	disp.image(image)
+	disp.display()
+	sys.exit(0)
+
+for sig in [signal.SIGTERM, signal.SIGINT, signal.SIGHUP, signal.SIGQUIT]: 
+	signal.signal(sig, signal_term_handler)
 
 #sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 try:
