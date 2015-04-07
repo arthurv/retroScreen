@@ -53,7 +53,7 @@ try:
 		#clock
 		#timestr = time.strftime("%H:%M:%S", time.localtime())
 		tFile = open('/sys/class/thermal/thermal_zone0/temp')
-		temp = "Temp: " + str(float(tFile.read())/1000) + " C"
+		temp = "Temp: " + "{:.2f}".format(float(tFile.read())/1000) + " C"
 		draw.text((0,30), temp, font=font)
 		# Display image.
 		disp.image(image)
