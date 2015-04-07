@@ -41,7 +41,7 @@ draw = ImageDraw.Draw(image)
 font = ImageFont.load_default()
 
 def signal_term_handler(signum = None, frame = None):
-	print "Terminated."
+	sys.stderr.write("Terminated.\n")
 	tFile.close()
 	draw.rectangle((0,0,83,47), outline=255, fill=255)
 	disp.image(image)
