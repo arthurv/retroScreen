@@ -52,12 +52,15 @@ try:
 		draw.text((0,20), diskstr, font=font)
 		#clock
 		#timestr = time.strftime("%H:%M:%S", time.localtime())
-		#draw.text((0,30), timestr, font=font)
+		tFile = open('/sys/class/thermal/thermal_zone0/temp')
+		temp = "Temp: " + str(float(tFile.read())/1000) + " C"
+		draw.text((0,30), temp, font=font)
 		# Display image.
 		disp.image(image)
 		disp.display()
         	time.sleep(1)
-except KeyboardInterrupt:
+except:
+	tFile.close()
 	draw.rectangle((0,0,83,47), outline=255, fill=255)
 	# Display image.
 	disp.image(image)
