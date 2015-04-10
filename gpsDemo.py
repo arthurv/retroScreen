@@ -2,6 +2,14 @@
 # Written by Dan Mandle http://dan.mandle.me September 2012
 # License: GPL 2.0
 
+# -- BEFORE YOU RUN THIS, SETUP COMMANDS ---
+#sudo apt-get install gpsd gpsd-clients python-gps
+#sudo dpkg-reconfigure gpsd
+#add -n to parameters
+#sudo killall gpsd
+#sudo gpsd /dev/ttyUSB0 -F /var/run/gpsd.sock
+#verify that it is working by using gpsmon (compare with: gpsmon /dev/ttyUSB0)
+
 import io
 import psutil
 import signal
