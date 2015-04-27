@@ -3,6 +3,7 @@ import time
 import psutil
 import signal
 import sys
+import bmp180
 
 import Adafruit_Nokia_LCD as LCD
 import Adafruit_GPIO.SPI as SPI
@@ -40,7 +41,7 @@ draw = ImageDraw.Draw(image)
 # Load default font.
 # Alternatively load a TTF font.
 # Some nice fonts to try: http://www.dafont.com/bitmap.php
-font = ImageFont.truetype('Minecraftia-Regular.ttf', 16)
+font = ImageFont.truetype('Minecraftia-Regular.ttf', 8)
 
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")
@@ -58,8 +59,14 @@ try:
 		# Clear image buffer.
 		draw.rectangle((0,0,83,47), outline=255, fill=255)
 		#disp.clear()
-		timestr = time.strftime("%H:%M:%S", time.localtime())
-		draw.text((5,10), timestr, font=font)
+		temperature = bmp180.readBmp180()[0]
+		pressure = bmp180.readBmp180()[1]
+		draw.text((0,0), "temp:", font=font)
+		tempstr =  str(temperature) + " C"
+		draw.text((0,10), tempstr, font=font)
+		draw.text((0,20), "pressure:", font=font)
+		presstr = str(pressure) + " mbar"
+		draw.text((0,30), presstr, font=font)
 		# Display image.
 		disp.image(image)
 		disp.display()

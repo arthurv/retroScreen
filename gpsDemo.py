@@ -1,5 +1,5 @@
 #! /usr/bin/python
-# Written by Dan Mandle http://dan.mandle.me September 2012
+# modification of script by Dan Mandle http://dan.mandle.me September 2012
 # License: GPL 2.0
 
 # -- BEFORE YOU RUN THIS, SETUP COMMANDS ---
@@ -43,7 +43,7 @@ disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=40
 #disp = LCD.PCD8544(DC, RST, SCLK, DIN, CS)
 
 # Initialize library.
-disp.begin(contrast=35)
+disp.begin(contrast=65)
 
 # Clear display.
 disp.clear()
