@@ -40,7 +40,7 @@ draw = ImageDraw.Draw(image)
 # Load default font.
 # Alternatively load a TTF font.
 # Some nice fonts to try: http://www.dafont.com/bitmap.php
-font = ImageFont.truetype('Minecraftia-Regular.ttf', 16)
+font = ImageFont.truetype('8bitOperatorPlusSC-Regular.ttf', 16)
 
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")
