@@ -40,7 +40,7 @@ draw = ImageDraw.Draw(image)
 # Load default font.
 # Alternatively load a TTF font.
 # Some nice fonts to try: http://www.dafont.com/bitmap.php
-font = ImageFont.truetype('8bitOperatorPlusSC-Regular.ttf', 16)
+font = ImageFont.truetype('8bitOperatorPlusSC-Regular.ttf', 23)
 
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")
@@ -59,7 +59,7 @@ try:
 		draw.rectangle((0,0,83,47), outline=255, fill=255)
 		#disp.clear()
 		timestr = time.strftime("%H:%M:%S", time.localtime())
-		draw.text((5,10), timestr, font=font)
+		draw.text((0,10), timestr, font=font)
 		# Display image.
 		disp.image(image)
 		disp.display()
