@@ -80,8 +80,12 @@ class GpsPoller(threading.Thread):
   def run(self):
     global gpsd
     while gpsp.running:
-      gpsd.next() #this will continue to loop and grab EACH set of gpsd info to clear the buffer
- 
+      try:
+        if gpsd.waiting():
+          gpsd.next() #this will continue to loop and grab EACH set of gpsd info to clear the buffer
+      except:
+        pass
+          
 if __name__ == '__main__':
   gpsp = GpsPoller() # create the thread
   try:
