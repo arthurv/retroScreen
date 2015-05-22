@@ -1,5 +1,6 @@
 import io
 import time
+import signal
 import netifaces
 
 import Adafruit_Nokia_LCD as LCD
@@ -22,7 +23,8 @@ disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=40
 #disp = LCD.PCD8544(DC, RST, SCLK, DIN, CS)
 
 # Initialize library.
-disp.begin(contrast=30)
+disp.begin(contrast=85)
+disp.set_contrast(55)
 
 # Clear display.
 disp.clear()
