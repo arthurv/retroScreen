@@ -43,7 +43,8 @@ disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=40
 #disp = LCD.PCD8544(DC, RST, SCLK, DIN, CS)
 
 # Initialize library.
-disp.begin(contrast=65)
+disp.begin(contrast=85)
+disp.set_contrast(55)
 
 # Clear display.
 disp.clear()
@@ -61,8 +62,7 @@ font = ImageFont.load_default()
 
 def signal_term_handler(signum = None, frame = None):
   sys.stderr.write("Terminated.\n")
-  draw.rectangle((0,0,83,47), outline=255, fill=255)
-  disp.image(image)
+  disp.clear()
   disp.display()
   sys.exit(0)
 
@@ -85,6 +85,10 @@ class GpsPoller(threading.Thread):
 if __name__ == '__main__':
   gpsp = GpsPoller() # create the thread
   try:
+    draw.rectangle((0,0,83,47), outline=255, fill=255)
+    draw.text((0,10), "No Fix", font=font)
+    disp.image(image)
+    disp.display()
     gpsp.start() # start it up
     while True:
       #It may take a second or two to get good data
@@ -97,9 +101,10 @@ if __name__ == '__main__':
       draw.text((0,10), latstr, font=font)
       longstr = 'lon:' + str(gpsd.fix.longitude)
       draw.text((0,20), longstr, font=font)
+      spdstr = 'spd:' + str(gpsd.fix.speed)
+      draw.text((0,30), spdstr, font=font)
       #print 'time utc    ' , gpsd.utc,' + ', gpsd.fix.time
       #print 'altitude (m)' , gpsd.fix.altitude
-      #print 'speed (m/s) ' , gpsd.fix.speed
       #print 'sats        ' , gpsd.satellites
       disp.image(image)
       disp.display()
