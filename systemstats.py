@@ -20,9 +20,6 @@ SPI_DEVICE = 0
 # Hardware SPI usage:
 disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=4000000))
 
-# Software SPI usage (defaults to bit-bang SPI interface):
-#disp = LCD.PCD8544(DC, RST, SCLK, DIN, CS)
-
 # Initialize library.
 disp.begin(contrast=85)
 disp.set_contrast(55)
@@ -44,8 +41,7 @@ font = ImageFont.load_default()
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")
 	tFile.close()
-	draw.rectangle((0,0,83,47), outline=255, fill=255)
-	disp.image(image)
+	disp.clear()
 	disp.display()
 	sys.exit(0)
 
@@ -75,7 +71,6 @@ try:
         	time.sleep(1)
 except:
 	tFile.close()
-	draw.rectangle((0,0,83,47), outline=255, fill=255)
-	# Display image.
-	disp.image(image)
+	# clear display.
+	disp.clear()
 	disp.display()

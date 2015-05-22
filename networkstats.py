@@ -1,5 +1,6 @@
 import io
 import time
+import sys
 import signal
 import netifaces
 
@@ -42,8 +43,7 @@ font = ImageFont.load_default()
 
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")
-	draw.rectangle((0,0,83,47), outline=255, fill=255)
-	disp.image(image)
+	disp.clear()
 	disp.display()
 	sys.exit(0)
 
@@ -71,7 +71,6 @@ try:
 		disp.display()
 	        time.sleep(1)
 except KeyboardInterrupt:
-	draw.rectangle((0,0,83,47), outline=255, fill=255)
-	# Display image.
-	disp.image(image)
+	# clear display.
+	disp.clear()
 	disp.display()
