@@ -61,10 +61,11 @@ for sig in [signal.SIGTERM, signal.SIGINT, signal.SIGHUP, signal.SIGQUIT]:
 
 #sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 try:
+	draw.rectangle((0,0,83,47), outline=255, fill=255)
 	while 1:
 		# Clear image buffer.
-		draw.rectangle((0,0,83,47), outline=255, fill=255)
-		#disp.clear()
+		if textlcd.currline == 0:
+			draw.rectangle((0,0,83,47), outline=255, fill=255)
 		serial_str = ser.readline()
 		if serial_str:
 			textlcd.println(serial_str)
