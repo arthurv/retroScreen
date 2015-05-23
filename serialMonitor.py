@@ -41,6 +41,7 @@ currline = 0
 def lcdprint(printtext=None):
 	draw.text((0,9*currline), printtext, font=font)
 	currline = (currline+1) % 5
+	return
 
 
 def signal_term_handler(signum = None, frame = None):
