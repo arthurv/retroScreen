@@ -36,7 +36,7 @@ image = Image.new('1', (LCD.LCDWIDTH, LCD.LCDHEIGHT))
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
 
-font = ImageFont.truetype('Volter__28Goldfish_29.ttf', 9)
+font = ImageFont.truetype('/home/pi/retroScreen/fonts/atomicsc.TTF', 6)
 
 ser = serial.Serial('/dev/ttyAMA0', 9600, timeout=None)
 
@@ -44,8 +44,8 @@ class lcdprinter():
 	def __init__(self):
 		self.currline = 0
 	def println(self,printtext):
-		draw.text((0,9*self.currline), printtext, font=font);
-		self.currline = (self.currline+1) % 5;
+		draw.text((1,6*self.currline), printtext, font=font);
+		self.currline = (self.currline+1) % 7;
 
 textlcd = lcdprinter()
 
@@ -62,6 +62,9 @@ for sig in [signal.SIGTERM, signal.SIGINT, signal.SIGHUP, signal.SIGQUIT]:
 #sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 try:
 	draw.rectangle((0,0,83,47), outline=255, fill=255)
+	textlcd.println("waiting for serial...")
+	disp.image(image)
+	disp.display()
 	while 1:
 		# Clear image buffer.
 		if textlcd.currline == 0:
