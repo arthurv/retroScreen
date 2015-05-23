@@ -3,6 +3,7 @@ import time
 import psutil
 import signal
 import sys
+import serial
 
 import Adafruit_Nokia_LCD as LCD
 import Adafruit_GPIO.SPI as SPI
@@ -37,7 +38,7 @@ draw = ImageDraw.Draw(image)
 
 font = ImageFont.truetype('Volter__28Goldfish_29.ttf', 9)
 
-currline = 0
+ser = serial.Serial('/dev/ttyAMA0', 9600, timeout=None)
 
 class lcdprinter():
 	def __init__(self):
@@ -50,7 +51,7 @@ textlcd = lcdprinter()
 
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")
-	tFile.close()
+	ser.close()
 	disp.clear()
 	disp.display()
 	sys.exit(0)
@@ -64,21 +65,15 @@ try:
 		# Clear image buffer.
 		draw.rectangle((0,0,83,47), outline=255, fill=255)
 		#disp.clear()
-		cpustr = "CPU: " + str(psutil.cpu_percent(interval=None)) + "%"
-		textlcd.println(cpustr)
-		memstr = "Mem: " + str(psutil.virtual_memory()[2]) + "%"
-		textlcd.println(memstr)
-		diskstr = "Disk: " + str(psutil.disk_usage("/")[3]) + "%"
-		textlcd.println(diskstr)
-		tFile = open('/sys/class/thermal/thermal_zone0/temp')
-		temp = "Temp: " + "{:.2f}".format(float(tFile.read())/1000) + " C"
-		textlcd.println(temp)
+		serial_str = ser.readline()
+		if serial_str:
+			textlcd.println(serial_str)
 		# Display image.
 		disp.image(image)
 		disp.display()
         	time.sleep(1)
 except KeyboardInterrupt:
-	tFile.close()
+	ser.close()
 	# clear display.
 	disp.clear()
 	disp.display()
