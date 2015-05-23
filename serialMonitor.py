@@ -38,11 +38,15 @@ draw = ImageDraw.Draw(image)
 font = ImageFont.truetype('Volter__28Goldfish_29.ttf', 9)
 
 currline = 0
-def lcdprint(printtext=None):
-	draw.text((0,9*currline), printtext, font=font)
-	currline = (currline+1) % 5
-	return
 
+class lcdprinter():
+	def __init__(self):
+		self.currline = 0
+	def println(self,printtext):
+		draw.text((0,9*self.currline), printtext, font=font);
+		self.currline = (self.currline+1) % 5;
+
+textlcd = lcdprinter()
 
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")
@@ -61,19 +65,19 @@ try:
 		draw.rectangle((0,0,83,47), outline=255, fill=255)
 		#disp.clear()
 		cpustr = "CPU: " + str(psutil.cpu_percent(interval=None)) + "%"
-		lcdprint(cpustr)
+		textlcd.println(cpustr)
 		memstr = "Mem: " + str(psutil.virtual_memory()[2]) + "%"
-		lcdprint(memstr)
+		textlcd.println(memstr)
 		diskstr = "Disk: " + str(psutil.disk_usage("/")[3]) + "%"
-		lcdprint(diskstr)
+		textlcd.println(diskstr)
 		tFile = open('/sys/class/thermal/thermal_zone0/temp')
 		temp = "Temp: " + "{:.2f}".format(float(tFile.read())/1000) + " C"
-		lcdprint(temp)
+		textlcd.println(temp)
 		# Display image.
 		disp.image(image)
 		disp.display()
         	time.sleep(1)
-except:
+except KeyboardInterrupt:
 	tFile.close()
 	# clear display.
 	disp.clear()
