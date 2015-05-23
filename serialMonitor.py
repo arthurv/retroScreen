@@ -35,8 +35,13 @@ image = Image.new('1', (LCD.LCDWIDTH, LCD.LCDHEIGHT))
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
 
-# Load default font.
-font = ImageFont.load_default()
+font = ImageFont.truetype('Volter__28Goldfish_29.ttf', 9)
+
+currline = 0
+def lcdprint(printtext=None):
+	draw.text((0,9*currline), printtext, font=font)
+	currline = (currline+1) % 5
+
 
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")
@@ -55,16 +60,14 @@ try:
 		draw.rectangle((0,0,83,47), outline=255, fill=255)
 		#disp.clear()
 		cpustr = "CPU: " + str(psutil.cpu_percent(interval=None)) + "%"
-		draw.text((0,00), cpustr, font=font)
+		lcdprint(cpustr)
 		memstr = "Mem: " + str(psutil.virtual_memory()[2]) + "%"
-		draw.text((0,10), memstr, font=font)
+		lcdprint(memstr)
 		diskstr = "Disk: " + str(psutil.disk_usage("/")[3]) + "%"
-		draw.text((0,20), diskstr, font=font)
-		#clock
-		#timestr = time.strftime("%H:%M:%S", time.localtime())
+		lcdprint(diskstr)
 		tFile = open('/sys/class/thermal/thermal_zone0/temp')
 		temp = "Temp: " + "{:.2f}".format(float(tFile.read())/1000) + " C"
-		draw.text((0,30), temp, font=font)
+		lcdprint(temp)
 		# Display image.
 		disp.image(image)
 		disp.display()
