@@ -25,7 +25,7 @@ disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=40
 #disp = LCD.PCD8544(DC, RST, SCLK, DIN, CS)
 
 # Initialize library.
-disp.begin(contrast=65)
+disp.begin(contrast=50)
 
 # Clear display.
 disp.clear()
@@ -41,7 +41,7 @@ draw = ImageDraw.Draw(image)
 # Load default font.
 # Alternatively load a TTF font.
 # Some nice fonts to try: http://www.dafont.com/bitmap.php
-font = ImageFont.truetype('Minecraftia-Regular.ttf', 8)
+font = ImageFont.load_default()
 
 def signal_term_handler(signum = None, frame = None):
 	sys.stderr.write("Terminated.\n")

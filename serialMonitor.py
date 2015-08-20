@@ -36,7 +36,7 @@ image = Image.new('1', (LCD.LCDWIDTH, LCD.LCDHEIGHT))
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
 
-font = ImageFont.truetype('/home/pi/retroScreen/fonts/atomicsc.TTF', 6)
+font = ImageFont.truetype('fonts/atomicsc.TTF', 6)
 
 ser = serial.Serial('/dev/ttyAMA0', 9600, timeout=None)
 

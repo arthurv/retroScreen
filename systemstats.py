@@ -21,7 +21,7 @@ SPI_DEVICE = 0
 disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=4000000))
 
 # Initialize library.
-disp.begin(contrast=85)
+disp.begin(contrast=55)
 disp.set_contrast(55)
 
 # Clear display.
